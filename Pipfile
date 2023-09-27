@@ -10,6 +10,9 @@ black = "*"
 langchain = "*"
 requests = "*"
 beautifulsoup4 = "*"
+streamlit = "*"
+tiktoken = "*"
+faiss-cpu = "*"
 
 [dev-packages]
 
