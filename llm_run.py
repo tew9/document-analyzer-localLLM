@@ -3,13 +3,13 @@ from langchain.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.chains import RetrievalQA
+from langchain.chains import QA
 from langchain.llms import OpenAI
 
 openapi_key = os.environ.get("OPENAI_API_KEY")
 
 
-def run_llm(file_path: str, prompt: str) -> str:
+def run_llm(file_path: str, prompt: str, chat_history: str = "") -> str:
     """_summary_
 
     Args:
@@ -59,8 +59,8 @@ def run_llm(file_path: str, prompt: str) -> str:
     
     # TODO: generate insights using the prompt and the loaded reviews
     print("generating insights...")
-    sys_context = "make sure you give full reviews, in a formatted order, remove the responses(like thanks..)."
-    insights = qa.run(f'{prompt}. context: {sys_context}')
+    sys_context = "make sure you give full reviews, in a formatted order, remove the last insignificant response parts that contains(thanks, thank you, etc)."
+    insights = qa({'query': f'{prompt}. context: {sys_context}', 'chat_history':chat_history})
 
     return insights
 
