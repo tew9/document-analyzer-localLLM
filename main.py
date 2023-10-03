@@ -19,22 +19,7 @@ st.markdown("""
     """,unsafe_allow_html=True)
 
 def main():
-    print("scrapping...")
-    review_url = "https://www.consumeraffairs.com/food/chick-fil-a.html"
-    review_file_path = "docs/cleaned_reviews.txt"
-    if not os.path.exists(review_file_path):
-        scrape_download_reviews(review_url)
-        print("reviews saved successfully")
-    else:
-        print("cleaned_reviews.txt already exists, skipping scraping")
-    
-    st.header("Chick-fil-A Review Analysis")
-    
-    with st.spinner("Getting the hottest review for you..."):
-        hottest_review = run_llm(review_file_path, "what's the most positive review out of all the reviews?")
-        st.text_area(label="Your hottest review so far:", value=hottest_review["result"], height=300, disabled=True)
-    
-    prompt = st.text_input("Want to know more about your review?", placeholder="what do you want to know about the reviews?")
+    prompt = st.text_input("Dive Deep on your result", placeholder="what can I help you to know on your score?")
     
     # setup user session with the history of the reviews
     if "user_prompt_history" not in st.session_state:
@@ -66,4 +51,19 @@ def main():
             st.success(generated_response)
 
 if __name__ == "__main__":
+    review_url = "https://www.consumeraffairs.com/food/chick-fil-a.html"
+    # review_file_path = "docs/cleaned_reviews.txt"
+    review_file_path = "docs/pma-responses.txt"
+    if not os.path.exists(review_file_path):
+        scrape_download_reviews(review_url)
+        print("reviews saved successfully")
+    else:
+        print("cleaned_reviews.txt already exists, skipping scraping")
+    
+    st.header("Chick-fil-A Review Analysis")
+    
+    with st.spinner("Getting the hottest review for you..."):
+        hottest_review = run_llm(review_file_path, "what's the overall maturity score and what are the factors that affected it?")
+        st.text_area(label="Your hottest review so far:", value=hottest_review["result"], height=300, disabled=True)
+    
     main()
