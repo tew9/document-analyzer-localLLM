@@ -3,17 +3,22 @@ from llm_run import run_llm
 import os
 import streamlit as st
 from streamlit_chat import message
+from dotenv import load_dotenv
+
+# load environemtn variables
+
+load_dotenv()
 
 st.markdown("""
     <style>
     .stTextArea [data-baseweb=base-input] {
-        background-image: linear-gradient(140deg, rgb(20, 40, 31) 0%, rgb(50, 100, 100) 50%, rgb(100, 117, 25) 75%);
+        background-image: green;
         -webkit-text-fill-color: white;
     }
 
     .stTextArea [data-baseweb=base-input] [disabled=""]{
         background-image: linear-gradient(45deg, red, purple, red);
-        -webkit-text-fill-color: gray;
+        -webkit-text-fill-color: white;
     }
     </style>
     """,unsafe_allow_html=True)
