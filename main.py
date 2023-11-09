@@ -1,5 +1,6 @@
 from review_scrapper import scrape_download_reviews
-from llm_run import run_llm
+# from llm_run import run_llm
+from ollama_run import run_llm
 import os
 import streamlit as st
 from streamlit_chat import message
@@ -23,10 +24,9 @@ st.markdown("""
     </style>
     """,unsafe_allow_html=True)
 
-def main():
+def main(review_file_path="cleaned_reviews.txt"):
     print("scrapping...")
     review_url = "https://www.consumeraffairs.com/food/chick-fil-a.html"
-    review_file_path = "docs/cleaned_reviews.txt"
     if not os.path.exists(review_file_path):
         scrape_download_reviews(review_url)
         print("reviews saved successfully")
@@ -34,10 +34,6 @@ def main():
         print("cleaned_reviews.txt already exists, skipping scraping")
     
     st.header("Chick-fil-A Review Analysis")
-    
-    with st.spinner("Getting the hottest review for you..."):
-        hottest_review = run_llm(review_file_path, "what's the most positive review out of all the reviews?")
-        st.text_area(label="Your hottest review so far:", value=hottest_review["result"], height=300, disabled=True)
     
     prompt = st.text_input("Want to know more about your review?", placeholder="what do you want to know about the reviews?")
     
@@ -71,4 +67,10 @@ def main():
             st.success(generated_response)
 
 if __name__ == "__main__":
-    main()
+    review_file_path = "docs/cleaned_reviews.txt"
+    with st.spinner("Getting the hottest review for you..."):
+        # hottest_review = run_llm(review_file_path, "what's the most positive review out of all the reviews?")
+        hottest_review = run_llm(review_file_path, "what's the most positive review out of all the reviews?")
+        st.text_area(label="Your hottest review so far:", value=hottest_review["result"], height=300, disabled=True)
+    # 
+    main(review_file_path)

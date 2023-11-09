@@ -14,6 +14,7 @@ streamlit = "*"
 tiktoken = "*"
 faiss-cpu = "*"
 streamlit-chat = "*"
+gpt4all = "*"
 
 [dev-packages]
 

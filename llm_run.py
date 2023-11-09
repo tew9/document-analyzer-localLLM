@@ -56,6 +56,11 @@ def run_llm(file_path: str, prompt: str, chat_history: str = "") -> str:
     qa =  RetrievalQA.from_chain_type(
         llm = OpenAI(), chain_type="stuff", retriever=review_search.as_retriever()
     )
+
+     # TODO: create retrieval chain
+    qa =  RetrievalQA.from_chain_type(
+        llm = OpenAI(), chain_type="stuff", retriever=review_search.as_retriever()
+    )
     
     # TODO: generate insights using the prompt and the loaded reviews
     print("generating insights...")
